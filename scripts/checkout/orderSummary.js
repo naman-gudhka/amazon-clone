@@ -6,6 +6,7 @@ import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 // this syntax is called default export, when we are calling only one thing from a file, we can avoid using curly braces.
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
 import {renderPaymentSummary} from './paymentSummary.js';
+import renderCheckoutHeader from './checkoutHeader.js';
 
 export function renderOrderSummary(){
 
@@ -15,9 +16,8 @@ export function renderOrderSummary(){
     const matchingProduct = getProduct(productId);
     const deliveryOptionId = cartItem.deliveryOptionId;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
-
     const today = dayjs();
-    const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
+    const deliveryDate = today.add(deliveryOption.  deliveryDays, 'days');
     const dateString = deliveryDate.format('dddd, MMMM D');
 
     cartSummaryHTML +=
@@ -105,23 +105,11 @@ export function renderOrderSummary(){
       link.addEventListener('click', () => {
         const productID = link.dataset.productId;
         removeFromCart(productID);
-        const container = document.querySelector(`.js-cart-item-container-${productID}`);
-        container.remove();
-        updateCartQuantity();
+        renderOrderSummary();
         renderPaymentSummary();
+        renderCheckoutHeader();
       });
     });
-
-  function updateCartQuantity(){
-    let cartQuantity = 0;
-    cart.forEach(cartItem => {
-      cartQuantity += cartItem.quantity;
-    });
-    document.querySelector('.js-return-to-home-link')
-      .innerHTML = `${cartQuantity} items`;
-  }
-
-  updateCartQuantity();
 
   document.querySelectorAll('.js-update-quantity-link').forEach((link) => {
       link.addEventListener('click', () => {
@@ -141,10 +129,9 @@ export function renderOrderSummary(){
           return;
         }
         updateQuantity(productId, quantityInput);
-        document.querySelector(`.js-quantity-label-${productId}`).innerHTML = quantityInput;
-        const container = document.querySelector(`.js-cart-item-container-${productId}`);
-        container.classList.remove('is-editing-quantity');
-        updateCartQuantity();
+        renderCheckoutHeader();
+        renderOrderSummary();
+        renderPaymentSummary();
       });
     });
 
@@ -153,6 +140,7 @@ export function renderOrderSummary(){
       element.addEventListener('click', () => {
         const {productId, deliveryOptionId} = element.dataset;
         updateDeliveryOption(productId, deliveryOptionId);
+        renderCheckoutHeader();
         renderOrderSummary();
         renderPaymentSummary();
       });
