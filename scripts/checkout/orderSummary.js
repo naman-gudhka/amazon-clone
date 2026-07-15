@@ -5,11 +5,7 @@ import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; 
 // this syntax is called default export, when we are calling only one thing from a file, we can avoid using curly braces.
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
-
-hello();
-const today = dayjs();
-const deliveryDate = today.add(7, 'days');
-console.log(deliveryDate.format('dddd, MMMM D'));
+import {renderPaymentSummary} from './paymentSummary.js';
 
 export function renderOrderSummary(){
 
@@ -112,6 +108,7 @@ export function renderOrderSummary(){
         const container = document.querySelector(`.js-cart-item-container-${productID}`);
         container.remove();
         updateCartQuantity();
+        renderPaymentSummary();
       });
     });
 
@@ -157,6 +154,7 @@ export function renderOrderSummary(){
         const {productId, deliveryOptionId} = element.dataset;
         updateDeliveryOption(productId, deliveryOptionId);
         renderOrderSummary();
+        renderPaymentSummary();
       });
     });
 }
