@@ -1,8 +1,9 @@
-import {cart, removeFromCart, updateQuantity} from '../data/cart.js';
+import {cart, removeFromCart, updateQuantity, updateDeliveryOption} from '../data/cart.js';
 import {products} from '../data/products.js';
 import formatCurrency from './utils/money.js';
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
-import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; // this syntax is called default export, when we are calling only one thing from a file, we can avoid using curly braces.
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; 
+// this syntax is called default export, when we are calling only one thing from a file, we can avoid using curly braces.
 import {deliveryOptions} from '../data/deliveryOptions.js';
 
 hello();
@@ -40,7 +41,7 @@ cart.forEach((cartItem) => {
   `
   <div class="cart-item-container    js-cart-item-container-${matchingProduct.id}">
     <div class="delivery-date">
-      ${dateString}
+      Delivery date: ${dateString}
     </div>
 
     <div class="cart-item-details-grid">
@@ -94,7 +95,7 @@ function deliveryOptionsHTML(matchingProduct, cartItem){
     const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
     html +=
     `
-      <div class="delivery-option">
+      <div class="delivery-option js-delivery-option" data-product-id="${matchingProduct.id}" data-delivery-option-id="${deliveryOption.id}">
         <input type="radio"
           ${isChecked ? 'checked' : ''}
           class="delivery-option-input"
@@ -160,5 +161,13 @@ document.querySelectorAll('.js-save-quantity-link')
       const container = document.querySelector(`.js-cart-item-container-${productId}`);
       container.classList.remove('is-editing-quantity');
       updateCartQuantity();
+    });
+  });
+
+document.querySelectorAll('.js-delivery-option')
+  .forEach((element) => {
+    element.addEventListener('click', () => {
+      const {productId, deliveryOptionId} = element.dataset;
+      updateDeliveryOption(productId, deliveryOptionId);
     });
   });
