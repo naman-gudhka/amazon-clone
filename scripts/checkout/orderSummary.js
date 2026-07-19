@@ -4,7 +4,7 @@ import formatCurrency from '../utils/money.js';
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; 
 // this syntax is called default export, when we are calling only one thing from a file, we can avoid using curly braces.
-import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
+import {deliveryOptions, getDeliveryOption, calculateDeliveryDate} from '../../data/deliveryOptions.js';
 import {renderPaymentSummary} from './paymentSummary.js';
 import renderCheckoutHeader from './checkoutHeader.js';
 
@@ -16,9 +16,7 @@ export function renderOrderSummary(){
     const matchingProduct = getProduct(productId);
     const deliveryOptionId = cartItem.deliveryOptionId;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
-    const today = dayjs();
-    const deliveryDate = today.add(deliveryOption.  deliveryDays, 'days');
-    const dateString = deliveryDate.format('dddd, MMMM D');
+    const dateString = calculateDeliveryDate(deliveryOption);
 
     cartSummaryHTML +=
     `
@@ -69,9 +67,7 @@ export function renderOrderSummary(){
   function deliveryOptionsHTML(matchingProduct, cartItem){
     let html = '';
     deliveryOptions.forEach((deliveryOption) => {
-      const today = dayjs();
-      const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-      const dateString = deliveryDate.format('dddd, MMMM D');
+      const dateString = calculateDeliveryDate(deliveryOption);
       const priceString = deliveryOption.priceCents === 0
       ? 'FREE'
       : `$${formatCurrency(deliveryOption.priceCents)} -`;

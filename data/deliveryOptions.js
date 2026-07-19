@@ -21,7 +21,7 @@ export function getDeliveryOption(deliveryOptionId){
       deliveryOption = option;
     }
   });
-  return deliveryOption || deliveryOption[0];
+  return deliveryOption || deliveryOptions[0];
 }
 
 function isWeekend(date) {
@@ -30,13 +30,16 @@ function isWeekend(date) {
 }
 
 export function calculateDeliveryDate(deliveryOption) {
-  const today = dayjs();
-  const deliveryDate = today.add(
-    deliveryOption.deliveryDays,
-    'days'
-  );
-  const dateString = deliveryDate.format(
-    'dddd, MMMM D'
-  );
-  return dateString;
+  let remainingDays = deliveryOption.deliveryDays;
+  let deliveryDate = dayjs();
+
+  while (remainingDays > 0) {
+    deliveryDate = deliveryDate.add(1, 'day');
+
+    if (!isWeekend(deliveryDate)) {
+      remainingDays--;
+    }
+  }
+
+  return deliveryDate.format('dddd, MMMM D');
 }
