@@ -2,17 +2,18 @@ import {getDeliveryOption} from "./deliveryOptions.js";
 
 class Cart{
   cartItems;
-  localStorageKey;
+  #localStorageKey;
+   // we used # becuase we want to make this property private. Private properties are only accessible within the class. We cannot access them outside the class. This helps us to protect the data from being modified by other parts of the code. We can only access them through the methods of the class.
 
   constructor(localStorageKey){
     // The constructor is a special method that is called when we create an instance of the class. It is used to initialize the properties of the class.
 
-    this.localStorageKey = localStorageKey;
-    this.loadFromStorage();
+    this.#localStorageKey = localStorageKey;
+    this.#loadFromStorage();
   }
 
-  loadFromStorage(){
-    this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+  #loadFromStorage(){
+    this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
     if(!this.cartItems){
       this.cartItems = [{
         productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
@@ -27,7 +28,7 @@ class Cart{
   }
 
   saveToStorage(){
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
 
   addToCart(productId){
@@ -105,6 +106,10 @@ class Cart{
 
 const cart = new Cart('cart-oop');
 const businessCart = new Cart('cart-business');
+
+/*
+  cart.#localStorageKey = 'test'; // This will throw an error because we cannot access the private property outside the class.
+*/
 
 console.log(cart);
 console.log(businessCart);
