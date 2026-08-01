@@ -32,6 +32,31 @@ class Product{
   getPrice(){
     return `$${formatCurrency(this.priceCents)}`;
   }
+
+  extraInfoHTML(){
+    return '';
+  }
+}
+
+// Inheritance example: Clothing class inherits from Product class, so it has all the properties and methods of Product class, and can also have its own properties and methods.
+
+class Clothing extends Product {
+  sizeChartLink;
+  
+  constructor(productDetails){
+    // Call the constructor of the parent class (Product) to initialize the inherited properties.
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+  
+  extraInfoHTML(){
+    return `
+      <a href="${this.sizeChartLink}" target="_blank">
+        Size chart
+      </a>
+    `;
+  }
+  // This is called method overriding. The extraInfoHTML method in the Clothing class overrides the extraInfoHTML method in the Product class. When we call extraInfoHTML on a Clothing instance, it will use this method instead of the one in Product class.
 }
 
 export const products = [
@@ -714,5 +739,9 @@ export const products = [
     priceCents: 870
   }
 ].map((productDetails) => {
-  return new Product(productDetails);
+  if(productDetails.type === "clothing"){
+    return new Clothing(productDetails);
+  }else{
+    return new Product(productDetails);
+  }
 });
