@@ -59,6 +59,47 @@ class Clothing extends Product {
   // This is called method overriding. The extraInfoHTML method in the Clothing class overrides the extraInfoHTML method in the Product class. When we call extraInfoHTML on a Clothing instance, it will use this method instead of the one in Product class.
 }
 
+/*
+  This is a in-built class in JavaScript that represents a date and time. We can create a new Date object to get the current date and time, and then use its methods to get the date and time in different formats. For example, we can use the toLocaleTimeString() method to get the time in a human-readable format based on the user's locale.
+
+  const date = new Date();
+  console.log(date);
+  console.log(date.toLocaleTimeString());
+*/
+
+/*
+  console.log(this);
+
+  const object2 = {
+    a: 2,
+    b: this.a
+  };
+
+  Here, this refers to the global object (window in browsers) when used outside of any function or object. So, this.a is undefined because there is no property a on the global object. Therefore, object2.b will be undefined.
+*/
+
+/*
+  function logThis(){
+    console.log(this);
+  }
+  logThis();
+  logThis.call('hello');
+
+  Here, this refers to the global object (window in browsers) when used inside a regular function. So, when we call logThis(), it logs the global object. When we call logThis.call('hello'), it sets this to 'hello' inside the function, so it logs 'hello'.
+*/
+
+/*
+  this
+  const object3 = {
+    method: () => {
+      console.log(this);
+    }
+  };
+  object3.method();
+
+  Here, In simplest language, this refers to the object that is executing the current function. In this case, the arrow function does not have its own this, so it uses the this from the enclosing context, which is the global object (window in browsers). Therefore, it logs the global object.
+*/
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",

@@ -46,7 +46,6 @@ products.forEach((product) => {
       </div>
 
       ${product.extraInfoHTML()}
-      // polymorphism: The extraInfoHTML method is called on the product object, which can be an instance of either the Product class or the Clothing class. Depending on the actual type of the product, the appropriate extraInfoHTML method will be executed. This allows us to handle different types of products in a uniform way without needing to know their specific types in advance.
 
       <div class="product-spacer"></div>
 
@@ -62,6 +61,9 @@ products.forEach((product) => {
     </div>
   `;
 });
+
+// This comment is for line #48:
+// polymorphism: The extraInfoHTML method is called on the product object, which can be an instance of either the Product class or the Clothing class. Depending on the actual type of the product, the appropriate extraInfoHTML method will be executed. This allows us to handle different types of products in a uniform way without needing to know their specific types in advance.
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
