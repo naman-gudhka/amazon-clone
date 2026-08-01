@@ -10,7 +10,7 @@ export function getProduct(productId){
   return matchingProduct;
 }
 
-class Product{
+export class Product{
   id;
   image;
   name;
@@ -40,7 +40,7 @@ class Product{
 
 // Inheritance example: Clothing class inherits from Product class, so it has all the properties and methods of Product class, and can also have its own properties and methods.
 
-class Clothing extends Product {
+export class Clothing extends Product {
   sizeChartLink;
   
   constructor(productDetails){
@@ -57,6 +57,26 @@ class Clothing extends Product {
     `;
   }
   // This is called method overriding. The extraInfoHTML method in the Clothing class overrides the extraInfoHTML method in the Product class. When we call extraInfoHTML on a Clothing instance, it will use this method instead of the one in Product class.
+}
+
+export class Appliance extends Product{
+  instructionsLink;
+  warrantyLink;
+  constructor(productDetails){
+    super(productDetails);
+    this.instructionsLink = productDetails.instructionsLink;
+    this.warrantyLink = productDetails.warrantyLink;
+  }
+  extraInfoHTML(){
+    return `
+      <a href="${this.instructionsLink}" target="_blank">
+        Instructions
+      </a>
+      <a href="${this.warrantyLink}" target="_blank">
+        Warranty
+      </a>
+    `;
+  }
 }
 
 /*
@@ -160,7 +180,10 @@ export const products = [
       "toaster",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "Appliances",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png"
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -345,7 +368,10 @@ export const products = [
       "water boiler",
       "appliances",
       "kitchen"
-    ]
+    ],
+    type: "Appliances",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png"
   },
   {
     id: "6b07d4e7-f540-454e-8a1e-363f25dbae7d",
@@ -650,7 +676,10 @@ export const products = [
       "coffeemakers",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "Appliances",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png"
   },
   {
     id: "02e3a47e-dd68-467e-9f71-8bf6f723fdae",
@@ -710,7 +739,10 @@ export const products = [
       "food blenders",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "Appliances",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png"
   },
   {
     id: "36c64692-677f-4f58-b5ec-0dc2cf109e27",
@@ -782,7 +814,11 @@ export const products = [
 ].map((productDetails) => {
   if(productDetails.type === "clothing"){
     return new Clothing(productDetails);
-  }else{
+  }
+  else if(productDetails.type === "Appliances"){
+    return new Appliance(productDetails);
+  }
+  else{
     return new Product(productDetails);
   }
 });

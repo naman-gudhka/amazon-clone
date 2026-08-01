@@ -104,7 +104,7 @@ class Cart{
 
 // Each object that we generate from the cart, is called as instance of the class. The instance will have all the properties and methods of the class.
 
-const cart = new Cart('cart-oop');
+export const cart = new Cart('cart-oop');
 const businessCart = new Cart('cart-business');
 
 /*
