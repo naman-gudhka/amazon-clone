@@ -22,12 +22,21 @@ import {loadCart} from '../data/cart.js';
   } 
 */
 async function loadPage(){
-  await loadProductsFetch();
-  await new Promise((resolve) => {
+  try{
+    // throw 'error1';
+
+    await loadProductsFetch();
+    await new Promise((resolve, reject) => {
+      // throw 'error2';
       loadCart(() => {
+        // reject('error3'); 
+        // reject is used to indicate that the promise has failed and to pass an error message. In this case, we are rejecting the promise with the message 'error3'.
         resolve();
       });
     });
+  }catch(error){
+    console.log('Unexpected error, Please try again later.');
+  }
 
   renderCheckoutHeader();
   renderOrderSummary();
