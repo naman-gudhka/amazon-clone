@@ -6,20 +6,52 @@ import {renderPaymentSummary} from './checkout/paymentSummary.js';
 import {loadProducts, loadProductsFetch} from '../data/products.js';
 import {loadCart} from '../data/cart.js';
 
-// Promise.all is used to wait for multiple asynchronous operations to complete before proceeding. In this case, we are waiting for both the products and the cart to be loaded before rendering the checkout components. 
+// async = function that returns a promise and allows the use of await inside it. It is used to handle asynchronous operations in a more readable way compared to using callbacks or .then() chains.
+/* 
+  here, async function loadPage() is similar to the function loadPage() that returns a promise. The difference is that the async function allows us to use the await keyword inside it, which makes it easier to work with asynchronous code. 
 
-Promise.all([
-  loadProductsFetch(),
-  new Promise((resolve) => {
-    loadCart(() => {
+  async function loadPage(){
+    console.log('load page');
+  }
+
+  function loadPage(){
+    return new Promise((resolve) => {
+      console.log('load page');
       resolve();
     });
-  })
-]).then(() => {
+  } 
+*/
+async function loadPage(){
+  await loadProductsFetch();
+  await new Promise((resolve) => {
+      loadCart(() => {
+        resolve();
+      });
+    });
+
   renderCheckoutHeader();
   renderOrderSummary();
   renderPaymentSummary();
-});
+}
+
+loadPage();
+
+/*
+  // Promise.all is used to wait for multiple asynchronous operations to complete before proceeding. In this case, we are waiting for both the products and the cart to be loaded before rendering the checkout components. 
+
+  Promise.all([
+    loadProductsFetch(),
+    new Promise((resolve) => {
+      loadCart(() => {
+        resolve();
+      });
+    });
+  ]).then(() => {
+    renderCheckoutHeader();
+    renderOrderSummary();
+    renderPaymentSummary();
+  });
+*/
 
 /*
   // Here we are using a Promise to ensure that the products are loaded before rendering the checkout components. The loadProducts function is called, and once it completes, we resolve the promise and proceed to the next step.
