@@ -1,11 +1,9 @@
 import {renderOrderSummary} from "../../scripts/checkout/orderSummary.js";
 import {loadFromStorage, cart} from "../../data/cart.js";
-import {loadProducts, loadProductsFetch} from "../../data/products.js";
+import {loadProducts, loadProductsFetch, products} from "../../data/products.js";
 
-beforeAll((done) => {
-  loadProductsFetch().then(() => {
-    done();
-  })
+beforeAll(async () => {
+  await loadProductsFetch();
 });
 
 describe('Test suite: renderOrderSummary', () => {

@@ -4,7 +4,7 @@ import {renderPaymentSummary} from './checkout/paymentSummary.js';
 // import '../../data/cart-class.js';
 // import '../../data/backend-practice.js';
 import {loadProducts, loadProductsFetch} from '../data/products.js';
-import {loadCart} from '../data/cart.js';
+import {/* loadCart */ loadCartFetch} from '../data/cart.js';
 
 // async = function that returns a promise and allows the use of await inside it. It is used to handle asynchronous operations in a more readable way compared to using callbacks or .then() chains.
 /* 
@@ -25,15 +25,24 @@ async function loadPage(){
   try{
     // throw 'error1';
 
-    await loadProductsFetch();
-    await new Promise((resolve, reject) => {
-      // throw 'error2';
-      loadCart(() => {
-        // reject('error3'); 
-        // reject is used to indicate that the promise has failed and to pass an error message. In this case, we are rejecting the promise with the message 'error3'.
-        resolve();
+    // await loadProductsFetch();
+    /*
+      await new Promise((resolve, reject) => {
+        // throw 'error2';
+        loadCart(() => {
+          // reject('error3'); 
+          // reject is used to indicate that the promise has failed and to pass an error message. In this case, we are rejecting the promise with the message 'error3'.
+          resolve();
+        });
       });
-    });
+    */
+    // await loadCartFetch();
+
+    await Promise.all([
+      loadProductsFetch(),
+      loadCartFetch()
+    ]);
+
   }catch(error){
     console.log('Unexpected error, Please try again later.');
   }
