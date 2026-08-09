@@ -4,7 +4,6 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import formatCurrency from './utils/money.js';
 import { calculateCartQuantity } from '../data/cart.js';
 import { resetCart } from '../data/cart.js';
-import {renderProductsGrid} from './amazon.js';
 
 async function loadPage(){
   await loadProductsFetch();
@@ -97,5 +96,4 @@ document.querySelector('.js-search-button')
   .addEventListener('click', () => {
     const search = document.querySelector('.js-search-bar').value;
     window.location.href = `amazon.html?search=${search}`;
-    renderProductsGrid();
   });
