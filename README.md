@@ -140,7 +140,7 @@ For development, you can use the Live Server extension in Visual Studio Code.
 
 ## 🌐 Live Demo
 
-Coming soon.
+https://naman-gudhka.github.io/amazon-clone/
 
 ## 👨‍💻 Author
 
